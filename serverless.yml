@@ -28,11 +28,19 @@ provider:
 #  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        Fn::GetAtt:
+            - servicesTable
+            - Arn
 #    - Effect: "Allow"
 #      Action:
 #        - "s3:PutObject"
@@ -108,9 +116,21 @@ custom:
     dockerizePip: false
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
+resources:
+ Resources:
+   servicesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: servicesTable
+        AttributeDefinitions:
+          - AttributeName: service_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: service_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 #      Type: AWS::S3::Bucket
 #      Properties:
 #        BucketName: my-new-bucket

@@ -8,6 +8,6 @@ def scrape_megabus(event, context):
     origin = route_info["origin"]
     destination = route_info["destination"]
 
-    data = scraper.get_ticket_price_by_capacity(date, origin, destination)
+    data = scraper.get_price_by_capacity(date, origin, destination)
 
     return data

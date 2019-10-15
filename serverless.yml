@@ -39,8 +39,8 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         Fn::GetAtt:
-            - servicesTable
-            - Arn
+          - journeysTable
+          - Arn
 #    - Effect: "Allow"
 #      Action:
 #        - "s3:PutObject"
@@ -118,15 +118,15 @@ custom:
 # you can add CloudFormation resource templates here
 resources:
  Resources:
-   servicesTable:
+   journeysTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: servicesTable
+        TableName: journeysTable
         AttributeDefinitions:
-          - AttributeName: service_id
+          - AttributeName: journey_id
             AttributeType: S
         KeySchema:
-          - AttributeName: service_id
+          - AttributeName: journey_id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

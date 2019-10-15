@@ -6,7 +6,7 @@ from decimal import Decimal
 
 
 def scrape_megabus(event, context):
-    route_info = event
+    route_info = json.loads(event['Records'][0]['Sns']['Message'])
     date = route_info["date"]
     origin = route_info["origin"]
     destination = route_info["destination"]

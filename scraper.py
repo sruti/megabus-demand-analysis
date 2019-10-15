@@ -6,6 +6,22 @@ import database
 from datetime import datetime as dt
 
 
+def travel_dates(start_rt, end_rt):
+    megabus_url = "https://uk.megabus.com/journey-planner/api/journeys/travel-dates"
+
+    params = {
+        "originCityId": start_rt,
+        "destinationCityId": end_rt,
+    }
+    resp = requests.get(megabus_url, params)
+    if resp.status_code != HTTPStatus.OK:
+        return None
+    dates = resp.json().get('availableDates')
+    if dates == None or len(dates) == 0:
+        return None
+    return dates
+
+
 def pull_data(dep_date, num_tix, start_rt, end_rt):
     megabus_url = "https://uk.megabus.com/journey-planner/api/journeys"
 

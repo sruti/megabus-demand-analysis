@@ -25,7 +25,7 @@ provider:
 
 # you can overwrite defaults here
 #  stage: dev
-#  region: us-east-1
+  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
@@ -41,9 +41,10 @@ provider:
         Fn::GetAtt:
           - journeysTable
           - Arn
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource: "arn:aws:sns:${self:provider.region}:${self:provider.environment.AWS_ACCOUNT_ID}:scrape-parameters"
 #      Resource:
 #        Fn::Join:
 #          - ""
@@ -52,8 +53,9 @@ provider:
 #            - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    AWS_ACCOUNT_ID: ${file(./vars.yml):AWS_ACCOUNT_ID}
+    REGION: ${self:provider.region}
 
 # you can add packaging information here
 #package:
@@ -103,7 +105,9 @@ functions:
 #          conditions:
 #            host: example.com
 #            path: /hello
-
+  trigger_scrape_megabus:
+    handler: handler.trigger_scrape_megabus
+    timeout: 60
 #    Define function environment variables here
 #    environment:
 #      variable2: value2

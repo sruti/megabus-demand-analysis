@@ -1,9 +1,20 @@
 import json
+import os
+from datetime import datetime
+from decimal import Decimal
 import scraper
 import database
 import notification
-from datetime import datetime
-from decimal import Decimal
+import sentry_sdk
+from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
+
+sentry_key = os.environ.get("SENTRY_KEY")
+sentry_project = os.environ.get("SENTRY_PROJECT")
+
+sentry_sdk.init(
+    dsn="https://{}@sentry.io/{}".format(sentry_key, sentry_project),
+    integrations=[AwsLambdaIntegration()]
+)
 
 
 def scrape_megabus(event, context):

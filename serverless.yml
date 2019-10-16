@@ -26,6 +26,8 @@ provider:
   environment:
     AWS_ACCOUNT_ID: ${file(./vars.yml):AWS_ACCOUNT_ID}
     REGION: ${self:provider.region}
+    SENTRY_KEY: ${file(./vars.yml):SENTRY_KEY}
+    SENTRY_PROJECT: ${file(./vars.yml):SENTRY_PROJECT}
 
 functions:
   scrape_megabus:

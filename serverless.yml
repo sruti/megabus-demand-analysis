@@ -32,7 +32,7 @@ provider:
 functions:
   scrape_megabus:
     handler: handler.scrape_megabus
-    timeout: 60
+    timeout: 70
     events:
       - sns: scrape-parameters
 
@@ -41,6 +41,13 @@ functions:
     timeout: 60
     events:
       - schedule: rate(2 hours)
+
+  journey_data:
+    handler: handler.get_journey_data
+    events:
+      - http:
+          path: journey
+          method: GET
 
 plugins:
   - serverless-python-requirements

@@ -61,3 +61,14 @@ def trigger_scrape_megabus(event, context):
                 "date": date
             }))
     return "Success"
+
+
+def get_journey_data(event, context):
+    # TODO: setup as endpoint, takes journeyid as parameter
+    # returns all price data
+    journey_id = json.loads(event)['queryParameters']['journey_id']
+    journey = database.get_journey(journey_id)
+    return {
+        "status": 200,
+        "msg": journey
+    }

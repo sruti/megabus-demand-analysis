@@ -3,7 +3,7 @@ A simple program to regularly get data from Megabus to understand demand (curren
 Deployed in AWS using the Serverless framework. 
 Uses Sentry for error handling.
 
-![Architecture Diagram](https://github.com/sruti/megabus-demand-analysis/architecture.jpg)
+![Architecture Diagram](./architecture.jpg)
 
 ## Setup
 Install [Serverless](https://serverless.com/framework/docs/getting-started/)

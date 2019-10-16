@@ -1,1 +1,0 @@
-'{"Records": [{"Sns": {"Message": {"origin": "56", "destination": "34", "date": "2019-10-21"}}}]}'

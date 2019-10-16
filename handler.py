@@ -64,11 +64,13 @@ def trigger_scrape_megabus(event, context):
 
 
 def get_journey_data(event, context):
-    # TODO: setup as endpoint, takes journeyid as parameter
-    # returns all price data
-    journey_id = json.loads(event)['queryParameters']['journey_id']
+    journey_id = event['queryStringParameters']['journey_id']
     journey = database.get_journey(journey_id)
-    return {
-        "status": 200,
-        "msg": journey
+    journey_prices = journey["price_by_numtix"]
+    journey["price_by_numtix"] = {num: [str(price) for price in price_list] for (
+        num, price_list) in journey_prices.items()}
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(journey)
     }
+    return response

@@ -37,6 +37,8 @@ functions:
   trigger_scrape_megabus:
     handler: handler.trigger_scrape_megabus
     timeout: 60
+    events:
+      - schedule: rate(2 hours)
 
 plugins:
   - serverless-python-requirements
